@@ -449,6 +449,7 @@ def create_dropdown_options(series):
 
 # Dash application
 app = dash.Dash(__name__)
+server = app.server
 
 # App Layout
 app.layout = html.Div(children=[
