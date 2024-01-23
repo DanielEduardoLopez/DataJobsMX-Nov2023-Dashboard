@@ -725,7 +725,7 @@ app.layout = html.Div(children=[
                                                               style={'textAlign': 'center', 'color': 'white','font-weight': 'bold', #'text-shadow': '0 0 2px #fff',
                                                               'font-size': 17, 'font-family': 'Tahoma', 'margin-left': '5%'}
                                                               ), style={'background-color': dark_bg_color, 
-                                                                        'width': '200px',
+                                                                        'width': '100%',
                                                                         'border-top-right-radius': '10px',
                                                                         'border-top-left-radius': '10px',
                                                                         }
@@ -737,11 +737,11 @@ app.layout = html.Div(children=[
 
                                         ], id='card-container-1',
                                             style={'margin-top': '20px',
-                                                  'margin-left': '1%',
+                                                  'margin-left': '0%',
                                                   'background-color': 'white',
                                                   'border-width': '2px',
                                                   'box-shadow': '1px 1px 1px '+shadow_color,
-                                                  'width': '200px',
+                                                  'width': '15.5%',
                                                   #'height': '100px',
                                                   'border-radius': '10px',
                                                   }
@@ -752,7 +752,7 @@ app.layout = html.Div(children=[
                                              html.Label("Number of Data Jobs",
                                                               style={'textAlign': 'center', 'color': 'white','font-weight': 'bold', #'text-shadow': '0 0 2px #fff',
                                                               'font-size': 17, 'font-family': 'Tahoma', 'margin-left': '5%'}
-                                                              ), style={'background-color': dark_bg_color, 'width': '200px',
+                                                              ), style={'background-color': dark_bg_color, 'width': '100%',
                                                                         'border-top-right-radius': '10px',
                                                                         'border-top-left-radius': '10px',
                                                                         }
@@ -764,11 +764,11 @@ app.layout = html.Div(children=[
 
                                         ], id='card-container-2',
                                             style={'margin-top': '-76px',
-                                                  'margin-left': '17%',
+                                                  'margin-left': '16.5%',
                                                   'background-color': 'white',
                                                   'border-width': '2px',
                                                   'box-shadow': '1px 1px 1px '+shadow_color,
-                                                  'width': '200px',                                                  
+                                                  'width': '15.5%',                                                  
                                                   #'height': '100px',
                                                   'border-radius': '10px',
                                                   }
