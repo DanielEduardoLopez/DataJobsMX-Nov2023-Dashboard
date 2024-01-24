@@ -459,8 +459,8 @@ app.layout = html.Div(children=[
                                                    html.Br(),
                                                    html.Img(src=image_path,
                                                              style={
-                                                            'margin-top': '15px',
-                                                            'margin-left': '70%',
+                                                            'margin-top': '1%',
+                                                            'margin-left': '73%',
                                                             'width': '70px', 
                                                             'height': '70px', 
                                                             'float': 'center',
