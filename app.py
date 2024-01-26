@@ -51,50 +51,13 @@ dash_theme=px.colors.sequential.Blues#px.colors.sequential.PuBu
 dash_theme_r=px.colors.sequential.Blues_r#px.colors.sequential.PuBu_r
 dark_bg_color= dash_theme_r[0]
 
+# Plot heights
+
+top_plot_height = '350px'
+bottom_plot_height = '395px'
+
 # Plotting functions
 
-# Job Demand: Pie Chart
-def plot_pie_chart(df):
-
-    job_df = pd.DataFrame(df['Job'].value_counts().reset_index()).rename(columns = {'count': 'Count'})
-
-    pie_colors = ['#154360','#539ecd','#89bedc',"#a9cce3", "#d4e6f1",'#dbe9f6', "#ebf5fb"]
-
-    demand_job_plot = px.pie(job_df, 
-                            values='Count', 
-                            names='Job', 
-                            color = 'Job', 
-                            hole = 0.7,  
-                            color_discrete_sequence=dash_theme_r,
-                            height=280,
-                            title='<b>Demand of Data Jobs Per Category</b>'
-                            )
-    
-    demand_job_plot.update_traces(hoverinfo='label+percent+name', 
-                                  textinfo='percent',                                 
-                                  texttemplate='%{percent:.0%}',
-                                  textfont_size=16,
-                                  direction ='clockwise',                                
-                                  marker=dict(colors=dash_theme_r, line=dict(color="rgba(0,0,0,0)", width=4))
-                                  )
-    
-    demand_job_plot.update_layout(transition_duration=400, 
-                                  title_x=0.5, 
-                                  paper_bgcolor="rgba(0,0,0,0)", 
-                                  plot_bgcolor="rgba(0,0,0,0)",
-                                  legend=dict(
-                                      #yanchor="bottom",
-                                      y=0.01,
-                                      #xanchor="right",
-                                      x=0.99,
-                                      #bgcolor='#d6eaf8',
-                                      bordercolor="rgba(0,0,0,0)"#'#2471a3',#blue
-                                      #borderwidth=1.5
-                                      ),
-                                  margin={"r":0,"t":80,"l":0,"b":0}
-                                  )
-    
-    return demand_job_plot
 
 # Sample size and Avg Salary: Card
 def plot_card_salary(df):
@@ -116,7 +79,7 @@ def plot_card_salary(df):
 
     card_salary.update_layout(paper_bgcolor = "rgba(0,0,0,0)",
                         grid = {'rows': 1, 'columns': 1, 'pattern': "independent"},
-                       width = 200,
+                       #width = 200,
                         height = 55,                        
                        margin = {'t': 5, 'r': 0, 'l': 0, 'b': 0}
                       )
@@ -145,12 +108,57 @@ def plot_card_demand(df):
 
     card_demand.update_layout(paper_bgcolor = "rgba(0,0,0,0)",
                         grid = {'rows': 1, 'columns': 1, 'pattern': "independent"},
-                       width = 200,
+                       #width = 200,
                         height = 55,
                        margin = {'t': 5, 'r': 0, 'l': 0, 'b': 0}
                       )
 
     return card_demand
+
+# Job Demand: Pie Chart
+def plot_pie_chart(df):
+
+    job_df = pd.DataFrame(df['Job'].value_counts().reset_index()).rename(columns = {'count': 'Count'})
+
+    pie_colors = ['#154360','#539ecd','#89bedc',"#a9cce3", "#d4e6f1",'#dbe9f6', "#ebf5fb"]
+
+    demand_job_plot = px.pie(job_df, 
+                            values='Count', 
+                            names='Job', 
+                            color = 'Job', 
+                            hole = 0.7,  
+                            color_discrete_sequence=dash_theme_r,
+                            height=250,
+                            title='<b>Demand of Data Jobs Per Category</b>'
+                            )
+    
+    demand_job_plot.update_traces(hoverinfo='label+percent+name', 
+                                  textinfo='percent',                                 
+                                  texttemplate='%{percent:.0%}',
+                                  textfont_size=16,
+                                  direction ='clockwise',                                
+                                  marker=dict(colors=dash_theme_r, line=dict(color="rgba(0,0,0,0)", width=4))
+                                  )
+    
+    demand_job_plot.update_layout(transition_duration=400, 
+                                  title_x=0.5, 
+                                  paper_bgcolor="rgba(0,0,0,0)", 
+                                  plot_bgcolor="rgba(0,0,0,0)",
+                                  legend=dict(
+                                      #yanchor="bottom",
+                                      y=0.01,
+                                      #xanchor="right",
+                                      x=0.99,
+                                      #bgcolor='#d6eaf8',
+                                      bordercolor="rgba(0,0,0,0)"#'#2471a3',#blue
+                                      #borderwidth=1.5
+                                      ),
+                                  margin={"r":0,"t":70,"l":0,"b":0}
+                                  )
+    
+    return demand_job_plot
+
+
 
 # Company Demand: Treemap
 def plot_treemap(df):
@@ -167,22 +175,33 @@ def plot_treemap(df):
     company_df = company_df[company_df['Vacancies'] > 0]
 
     demand_company_plot = px.treemap(company_df, 
-                                     path = [px.Constant("."), 'Company'], 
+                                     path = ['Company'], 
                                      values='Vacancies', 
-                                     color = 'Vacancies', 
-                                     color_continuous_scale=dash_theme,
+                                     #color = 'Vacancies',                                      
+                                     color_discrete_sequence=['rgb(8,48,107)', 
+                                                              'rgb(8,81,156)', 
+                                                              'rgb(33,113,181)', 
+                                                              'rgb(66,146,198)', 
+                                                              'rgb(107,174,214)', 
+                                                              'rgb(158,202,225)', 
+                                                              'rgb(198,219,239)', 
+                                                              'rgb(222,235,247)', 
+                                                              'rgb(247,251,255)', 
+                                                              'rgb(247,251,255)'],                                     
                                      title= f'<b>Top {top} Companies Demanding Data Jobs</b>',
-                                     height= 380,
-                                     #width = 450,
+                                     height= 350,
+                                     #width = 450,                                     
 
                                     )
     
+    demand_company_plot.update_traces(root_color="rgba(0,0,0,0)")
+    
     demand_company_plot.update_layout(transition_duration=400, 
                                       paper_bgcolor="rgba(0,0,0,0)", 
-                                      plot_bgcolor="rgba(0,0,0,0)",
-                                      margin={"r":0,"t":80,"l":20,"b":20}
+                                      plot_bgcolor="rgba(0,0,0,0)",                                      
+                                      margin={"r":20,"t":70,"l":20,"b":20}
                                       )
-      
+              
     return demand_company_plot
 
 # Location Demand: Choropleth Map
@@ -242,11 +261,11 @@ def plot_cloropleth(df):
                                         color='Percentage',
                                         color_continuous_scale=dash_theme,
                                         scope="north america",
-                                        height= 370,
-                                        #title='Demand of Data Jobs per Mexican State',
+                                        height= 340,
+                                        #title='Demand of Data Jobs per Mexican State',                                        
                                         labels={'Percentage':'National <br>Demand %'}
                                         )
-     
+        
     demand_location_plot.update_geos(fitbounds="locations", 
                                     visible=False)
     
@@ -260,7 +279,7 @@ def plot_cloropleth(df):
     demand_location_plot.add_annotation(
                                         xanchor="center",
                                         yanchor='top',
-                                        yshift=180,
+                                        yshift=170,
                                         xshift=40,
                                         font={'size':17},
                                         text="<b>Demand of Data Jobs by Location</b>", # text
@@ -280,33 +299,48 @@ def plot_boxplot(df):
     salary_job_plot = px.box(salary_job_df, 
                             x = "Job", 
                             y = "Salary", 
-                            color = "Job", 
+                            #color = "Job", 
                             points="all", 
-                            color_discrete_sequence=dash_theme_r,
-                            category_orders={"Job": ['ML Engineer',
-                                                    'Data Architect', 
-                                                    'Data Engineer', 
-                                                    'Data Scientist', 
-                                                    'Business Analyst', 
-                                                    'BI Analyst',
-                                                    'Data Analyst']},
+                            color_discrete_sequence=['#2874a6'],
+                            # category_orders={"Job": ['ML Engineer',
+                            #                         'Data Architect', 
+                            #                         'Data Engineer', 
+                            #                         'Data Scientist', 
+                            #                         'Business Analyst', 
+                            #                         'BI Analyst',
+                            #                         'Data Analyst']},
                             labels={
                                     "Salary": "Mean Monthly Salary (MXN)",
                                     "Job": "Data Job Category"},
                             title='<b>Salary Per Data Job Category</b>',
-                            height=400
+                            height=390
                             )
     salary_job_plot.update_traces(showlegend=False)
     salary_job_plot.update_layout(transition_duration=400, 
                                   title_x=0.5, 
                                   paper_bgcolor="rgba(0,0,0,0)", 
-                                  plot_bgcolor='#e1e7ff',
-                                  margin={"r":0,"t":50,"l":40,"b":0})
-    salary_job_plot.update_yaxes(tickformat = '$,~s')
+                                  plot_bgcolor='#E5E4E2',
+                                  margin={"r":10,"t":40,"l":40,"b":0})
+    
+
+    salary_job_plot.update_xaxes(
+                                  #mirror=True,
+                                  #ticks='outside',
+                                  #showline=True,
+                                  #linecolor='white',                                  
+                              )
+
+    salary_job_plot.update_yaxes(tickformat = '$,~s',
+                                  #mirror=True,
+                                  #ticks='outside',
+                                  #showline=True,
+                                  #linecolor='white',
+                                  #gridcolor='white'
+                              )
 
     return salary_job_plot
 
-# Salary Per Company: Heatmap
+# Salary Per Company: Heatmap plot 1
 
 def plot_heatmap(df):
 
@@ -315,11 +349,13 @@ def plot_heatmap(df):
     salary_job_df = df.dropna(axis = 0, how='any', subset = ['Salary'])
 
     salary_company_df = (pd.pivot_table(salary_job_df, index = 'Company', columns = 'Job', values = 'Salary', aggfunc= 'mean')
-                        .assign(Total_Average= lambda d: d.mean(axis=1, numeric_only= True))
-                        .fillna(0).sort_values('Total_Average', ascending = False)[:top]
-                        .sort_values('Company', ascending = False)
-                        .drop(columns = 'Total_Average').reset_index()
+                        .assign(Max_Value= lambda d: d.max(axis=1, numeric_only= True))
+                        .reset_index()
+                        .assign(Company= lambda d: d.Company.str[:20])
+                        .fillna(0).sort_values('Max_Value', ascending = False)[:top]                                                
                         .rename(index = {'Job': 'Index'})
+                        .sort_values('Max_Value', ascending = True)
+                        .drop(columns = 'Max_Value')
                         )                  
 
     salary_company_df = pd.melt(salary_company_df, id_vars = 'Company', var_name = 'Job', value_name = 'Salary')
@@ -330,8 +366,8 @@ def plot_heatmap(df):
                                             z = 'Salary',
                                             histfunc="avg", 
                                             color_continuous_scale=dash_theme,
-                                            height=440,
-                                            title='<b>Salary Per Company And Data Job Category</b>',
+                                            height=430,
+                                            title='<b>Salary Per Company And Data Job</b>',
                                             labels={"Job": ""},                                         
                                             #text_auto=True
                                             )
@@ -340,7 +376,7 @@ def plot_heatmap(df):
                                       coloraxis_colorbar=dict(title="Avg. Mth. <br>Salary (MXN)"),
                                       paper_bgcolor="rgba(0,0,0,0)", 
                                       plot_bgcolor="rgba(0,0,0,0)",
-                                      margin={"r":20,"t":50,"l":20,"b":40}
+                                      margin={"r":20,"t":40,"l":20,"b":40}
                                       )
 
     salary_company_plot.update_coloraxes(colorbar_tickformat = '$,~s')
@@ -348,95 +384,41 @@ def plot_heatmap(df):
 
     return salary_company_plot
 
-# Salary Per Location: Contour plot
-def plot_contour(df):
+# Salary Per Location: Heatmap plot 2
+def plot_heatmap_2(df):
 
-    # States dictionary with corresponding ID
-    location_dict = {'Aguascalientes': 'AS', 
-                'Baja California': 'BC', 
-                'Baja California Sur': 'BS', 
-                'Campeche': 'CC',
-                'Ciudad de México':'DF',
-                'Chiapas': 'CS',
-                'Chihuahua':'CH',
-                'Coahuila':'CL',
-                'Colima':'CM',
-                'Durango':'DG',
-                'Estado de México':'MC',
-                'Guanajuato':'GT',
-                'Guerrero':'GR',
-                'Hidalgo':'HG',
-                'Jalisco':'JC',
-                'Michoacán':'MN',
-                'Morelos':'MS',
-                'Nayarit':'NT',
-                'Nuevo León':'NL',
-                'Oaxaca':'OC',
-                'Puebla':'PL',
-                'Querétaro':'QT',
-                'Quintana Roo':'QR',
-                'San Luis Potosí':'SP',
-                'Sinaloa':'SL',
-                'Sonora':'SR',
-                'Tabasco':'TC',
-                'Tamaulipas':'TS',
-                'Tlaxcala':'TL',
-                'Veracruz':'VZ',
-                'Yucatán':'YN',
-                'Zacatecas':'ZS'}
+    salary_location_df = (pd.pivot_table(df, index = 'Location', columns = 'Job', values = 'Salary', aggfunc= 'mean')
+                        .assign(Max_Value= lambda d: d.max(axis=1, numeric_only= True))
+                        .fillna(0).sort_values('Max_Value', ascending = True)                                                                                              
+                        .drop(columns = 'Max_Value').reset_index()
+                        )   
+    
+    salary_location_df = pd.melt(salary_location_df, id_vars = 'Location', var_name = 'Job', value_name = 'Salary')
 
-    location_df = (pd.DataFrame.from_dict(location_dict, orient='index')
-                  .reset_index().rename(columns={"index": "State", 0: "ID"})
-                  .set_index('State')
-                    )
-
-    demand = (pd.DataFrame(df['Location'].value_counts())
-              .reset_index()
-              .rename(columns={'count':'Count', 'Location':'State'})
-              .assign(total= lambda d: sum(d.Count))
-              .assign(Percentage= lambda d: (d['Count'] / d.total )*100)
-              .drop(columns=['total'])
-              )
-
-    location_df = location_df.merge(demand, left_on='State', right_on='State', how = 'outer').fillna(0)
-
-    salary_job_df = df.dropna(axis = 0, how='any', subset = ['Salary'])
-
-    salary_location_df = (pd.pivot_table(data = salary_job_df, index = 'Location', columns = 'Job', values = 'Salary', aggfunc= 'mean')
-                          .reset_index().merge(location_df, left_on='Location', right_on='State', how = 'outer')
-                          .set_index('State').drop(columns =['ID', 'Count', 'Percentage', 'Location']).fillna(0)
-                          .sort_values('State', ascending = False).reset_index()
-                        )
-
-    salary_location_df = pd.melt(salary_location_df, id_vars= 'State', var_name = 'Job', value_name = 'Salary')
-
-    salary_location_plot = px.density_contour(salary_location_df, 
-                                              y='State', 
+    salary_location_plot = px.density_heatmap(salary_location_df, 
+                                              y='Location', 
                                               x='Job', 
                                               z='Salary',
                                               histfunc="avg", 
-                                              color_discrete_sequence=dash_theme_r,
-                                              height=440,
-                                              title='<b>Salary Per Location And Data Job Category</b>',
+                                              color_continuous_scale=dash_theme,
+                                              height=430,
+                                              title='<b>Salary Per Location And Data Job</b>',
                                               labels={
                                                         "State": "Location",
                                                         'Job': ''
                                                         }
                                                 )
-
-    salary_location_plot.update_traces(contours_coloring="fill", 
-                                      contours_showlabels = True, 
-                                      colorscale = dash_theme, 
-                                      colorbar_tickformat='$,~s',
-                                      colorbar_title_text='Avg. Mth. <br>Salary (MXN)')
-
+    
     salary_location_plot.update_layout(transition_duration=400, 
                                       title_x=0.5, 
-                                      coloraxis_colorbar=dict(title="Vacancies"),
+                                      coloraxis_colorbar=dict(title="Avg. Mth. <br>Salary (MXN)"),
                                       paper_bgcolor="rgba(0,0,0,0)", 
                                       plot_bgcolor="rgba(0,0,0,0)",
-                                      margin={"r":20,"t":50,"l":20,"b":40}
+                                      margin={"r":20,"t":40,"l":20,"b":40}
                                       )
+
+    salary_location_plot.update_coloraxes(colorbar_tickformat = '$,~s')
+    #salary_location_plot.update_traces(texttemplate="$%{z:,.0f}")
 
     return salary_location_plot
 
@@ -456,26 +438,26 @@ app.layout = html.Div(children=[
                                 # First section
                                 # Adding Title
                                 html.Div(children=[ 
-                                                   html.Br(),
+                                                   html.Br(),                                                   
                                                    html.Img(src=image_path,
                                                              style={
-                                                            'margin-top': '1%',
-                                                            'margin-left': '73%',
-                                                            'width': '70px', 
-                                                            'height': '70px', 
+                                                            'margin-top': '0.8%',
+                                                            'margin-left': '70.5%',
+                                                            'width': '53px', 
+                                                            'height': '53px', 
                                                             'float': 'center',
                                                         }),
                                                    html.H1("Dashboard of Data Jobs in Mexico",
                                                   style={'textAlign': 'center', 'color': '#002c5b', #'#3a3a3a', #'#0025a1',
-                                                        'font-size': 40, 'font-family': 'Tahoma',
+                                                        'font-size': 36, 'font-family': 'Tahoma',
                                                         #'text-shadow': '0 0 3px #848484',
-                                                        'margin-top': '-65px'
+                                                        'margin-top': '-55px'
                                                         }),                                               
                                                     
                                                ], 
-                                               style={'margin-top': '-25px',
+                                               style={'margin-top': '-26px',
                                                       'width': '100%', 
-                                                      'height': '110px', 
+                                                      'height': '90px', 
                                                       #'background-color': '#B3D5FA', #'#C0C0C0', 
                                                       'float': 'center', 
                                                       }                                               
@@ -486,7 +468,7 @@ app.layout = html.Div(children=[
                                                'font-size': 5, 'font-family': 'Tahoma'})], 
                                                style={'margin-top': '-5px',
                                                       'width': '100%', 
-                                                      'height': '10px', 
+                                                      'height': '7px', 
                                                       'background-color': dark_bg_color, 
                                                       'textAlign': 'center',
                                                       'float': 'center', 
@@ -669,7 +651,7 @@ app.layout = html.Div(children=[
                                       html.P("Data collected from OCC.com.mx on 26 November 2023.",
                                               style={'textAlign': 'center', 'color': 'white',
                                                      'font-size': 13, 'font-family': 'Tahoma'}),
-                                        ], style={'margin-top': '30px','margin-right': '5%'}
+                                        ], style={'margin-top': '20px','margin-right': '5%'}
                                   ),    
                                   
                                   html.Div(children=[
@@ -692,17 +674,17 @@ app.layout = html.Div(children=[
                                                       'margin': 'auto',
                                                       'display': 'block'}),
 
-                                          ], style={'margin-top': '60px','margin-right': '5%'}
+                                          ], style={'margin-top': '40px','margin-right': '5%'}
                                            
                                            
                                            ),                              
 
                                 ], id='left-container',
-                                style={'margin-top': '0px',
+                                style={'margin-top': '-10px',
                                         'margin-left': '5px',
                                         'margin-right': '10px',
                                         'width': '14%',
-                                       'height': '700px',
+                                       'height': '670px',
                                        'background-color': dark_bg_color, 
                                        'float': 'center', 
                                        'border-top-right-radius': '70px',
@@ -736,7 +718,7 @@ app.layout = html.Div(children=[
                                             
 
                                         ], id='card-container-1',
-                                            style={'margin-top': '20px',
+                                            style={'margin-top': '55px',
                                                   'margin-left': '0%',
                                                   'background-color': 'white',
                                                   'border-width': '2px',
@@ -784,7 +766,7 @@ app.layout = html.Div(children=[
                                                   style={'margin-top': '10px',
                                                           'margin-left': '0px',
                                                           'width': '32%',
-                                                          'height': '290px',
+                                                          'height': '270px',
                                                           'box-shadow': '1px 1px 1px '+shadow_color,
                                                           'border-radius': '20px',    
                                                           'background-color': 'White',
@@ -797,11 +779,11 @@ app.layout = html.Div(children=[
                                                 # Job-Salary Plot: Treemap
                                                       dcc.Graph(id='demand_company_plot'),
                                               
-                                              ], id='Boxplot',
-                                                style={'margin-top': '-370px',
+                                              ], id='Treemap',
+                                                style={'margin-top': '-'+top_plot_height,
                                                         'margin-left': '32.5%',
                                                         'width': '33%',
-                                                        'height': '370px',
+                                                        'height': top_plot_height,
                                                         'box-shadow': '1px 1px 1px '+shadow_color,
                                                         'border-radius': '20px',    
                                                         'background-color': 'White',                                                                                                            
@@ -814,10 +796,10 @@ app.layout = html.Div(children=[
                                                 # Location Demand Plot: Map
                                                 dcc.Graph(id='demand_location_plot'),
                                                 ], id='Map',
-                                                style={'margin-top': '-370px',
+                                                style={'margin-top': '-'+top_plot_height,
                                                         'margin-left': '66%',
                                                         'width': '34%',
-                                                        'height': '370px',
+                                                        'height': top_plot_height,
                                                          'box-shadow': '1px 1px 1px '+shadow_color,
                                                         'border-radius': '20px',    
                                                         'background-color': 'White',          
@@ -842,11 +824,11 @@ app.layout = html.Div(children=[
                                                 # Company Demand Plot: Boxplot
                                                 dcc.Graph(id='salary_job_plot'),
 
-                                                ], id='Treemap',
-                                                style={'margin-top': '80px',
+                                                ], id='Boxplot',
+                                                style={'margin-top': '60px',
                                                         'margin-left': '0.5%',
                                                         'width': '31.5%',
-                                                        'height': '410px',
+                                                        'height': bottom_plot_height,
                                                         'box-shadow': '1px 1px 1px '+shadow_color,
                                                         'border-radius': '20px',    
                                                         'background-color': 'White',         
@@ -856,14 +838,14 @@ app.layout = html.Div(children=[
                                                 # Fifth Plot
                                                 html.Div(children=[
 
-                                                    # Company-Salary Plot: Heatmap
+                                                    # Company-Salary Plot: 1° Heatmap
                                                     dcc.Graph(id='salary_company_plot'),
 
                                                     ], id='Heatmap',
-                                                    style={'margin-top': '-410px',
+                                                    style={'margin-top': '-'+bottom_plot_height,
                                                             'margin-left': '32.5%',
                                                             'width': '32.7%',
-                                                            'height': '410px',
+                                                            'height': bottom_plot_height,
                                                             'box-shadow': '1px 1px 1px '+shadow_color,
                                                             'border-radius': '20px',    
                                                             'background-color': 'White',      
@@ -873,14 +855,14 @@ app.layout = html.Div(children=[
                                               #Sixth Plot
                                               html.Div(children=[
 
-                                                    # Location-Salary Plot: Contourmap
+                                                    # Location-Salary Plot: 2° Heatmap
                                                     dcc.Graph(id='salary_location_plot'),
 
-                                                    ], id='Contourmap',
-                                                    style={'margin-top': '-410px',
+                                                    ], id='Heatmap_2',
+                                                    style={'margin-top': '-'+bottom_plot_height,
                                                             'margin-left': '65.7%',
                                                             'width': '33.7%',
-                                                            'height': '410px',
+                                                            'height': bottom_plot_height,
                                                             'box-shadow': '1px 1px 1px '+shadow_color,
                                                             'border-radius': '20px',    
                                                             'background-color': 'White',      
@@ -900,7 +882,7 @@ app.layout = html.Div(children=[
                                         'margin-left': '15%',
                                         'margin-right': '1px',
                                         'width': '85%',
-                                       'height': '800px',
+                                       'height': '760px',
                                        
                                        }
                                 ),
@@ -962,7 +944,7 @@ def update_output(job, location, company, salary, salary_filter):
     demand_location_plot = plot_cloropleth(dff)
     salary_job_plot = plot_boxplot(dff)
     salary_company_plot = plot_heatmap(dff)
-    salary_location_plot = plot_contour(dff)
+    salary_location_plot = plot_heatmap_2(dff)
     card_demand = plot_card_demand(dff)
     card_salary = plot_card_salary(dff)
 
@@ -976,7 +958,7 @@ def update_output(job, location, company, salary, salary_filter):
           demand_location_plot = plot_cloropleth(dff)
           salary_job_plot = plot_boxplot(dff)
           salary_company_plot = plot_heatmap(dff)
-          salary_location_plot = plot_contour(dff)
+          salary_location_plot = plot_heatmap_2(dff)
           card_demand = plot_card_demand(dff)
           card_salary = plot_card_salary(dff)
         
@@ -988,7 +970,7 @@ def update_output(job, location, company, salary, salary_filter):
           demand_location_plot = plot_cloropleth(dff)
           salary_job_plot = plot_boxplot(dff)
           salary_company_plot = plot_heatmap(dff)
-          salary_location_plot = plot_contour(dff)
+          salary_location_plot = plot_heatmap_2(dff)
           card_demand = plot_card_demand(dff)
           card_salary = plot_card_salary(dff)
         
@@ -1000,7 +982,7 @@ def update_output(job, location, company, salary, salary_filter):
           demand_location_plot = plot_cloropleth(dff)
           salary_job_plot = plot_boxplot(dff)
           salary_company_plot = plot_heatmap(dff)
-          salary_location_plot = plot_contour(dff)
+          salary_location_plot = plot_heatmap_2(dff)
           card_demand = plot_card_demand(dff)
           card_salary = plot_card_salary(dff)
         
@@ -1012,7 +994,7 @@ def update_output(job, location, company, salary, salary_filter):
           demand_location_plot = plot_cloropleth(dff)
           salary_job_plot = plot_boxplot(dff)
           salary_company_plot = plot_heatmap(dff)
-          salary_location_plot = plot_contour(dff)
+          salary_location_plot = plot_heatmap_2(dff)
           card_demand = plot_card_demand(dff)
           card_salary = plot_card_salary(dff)
 
@@ -1024,7 +1006,7 @@ def update_output(job, location, company, salary, salary_filter):
           demand_location_plot = plot_cloropleth(dff)
           salary_job_plot = plot_boxplot(dff)
           salary_company_plot = plot_heatmap(dff)
-          salary_location_plot = plot_contour(dff)
+          salary_location_plot = plot_heatmap_2(dff)
           card_demand = plot_card_demand(dff)
           card_salary = plot_card_salary(dff)
 
@@ -1036,7 +1018,7 @@ def update_output(job, location, company, salary, salary_filter):
           demand_location_plot = plot_cloropleth(dff)
           salary_job_plot = plot_boxplot(dff)
           salary_company_plot = plot_heatmap(dff)
-          salary_location_plot = plot_contour(dff)
+          salary_location_plot = plot_heatmap_2(dff)
           card_demand = plot_card_demand(dff)
           card_salary = plot_card_salary(dff)
 
@@ -1048,7 +1030,7 @@ def update_output(job, location, company, salary, salary_filter):
           demand_location_plot = plot_cloropleth(dff)
           salary_job_plot = plot_boxplot(dff)
           salary_company_plot = plot_heatmap(dff)
-          salary_location_plot = plot_contour(dff)
+          salary_location_plot = plot_heatmap_2(dff)
           card_demand = plot_card_demand(dff)
           card_salary = plot_card_salary(dff)
         
